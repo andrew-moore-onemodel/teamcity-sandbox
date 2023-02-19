@@ -1,2 +1,8 @@
 src/backend/Webapp/Webapp/bin/
 src/backend/Webapp/Webapp/obj/
+backend/Webapp/bin/
+backend/Webapp/obj/
+teamcity-docker-compose/agents/
+teamcity-docker-compose/buildserver_pgdata/
+teamcity-docker-compose/data_dir/
+teamcity-docker-compose/teamcity-server-logs/
