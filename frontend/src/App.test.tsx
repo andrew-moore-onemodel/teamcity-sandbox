@@ -2,7 +2,9 @@ import React from "react";
 import { render } from "@testing-library/react";
 import App from "./App";
 
-test("renders learn react link", () => {
-    render(<App />);
-    expect(true).toBeTruthy();
+describe("<App>", () => {
+    it("renders", () => {
+        render(<App />);
+        expect(true).toBeTruthy();
+    });
 });
