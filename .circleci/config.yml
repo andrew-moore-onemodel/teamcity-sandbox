@@ -5,8 +5,18 @@ version: 2.1
 # Define a job to be invoked later in a workflow.
 # See: https://circleci.com/docs/configuration-reference/#jobs
 jobs:
+  build-frontend:
+    docker:
+      - image: node:latest
+    steps:
+      - checkout
+      - run:
+          working_directory: ~/project/frontend/
+          name: Build React App
+          command: |
+            npm run build
   # Below is the definition of your job to build and test your app, you can rename and customize it as you want.
-  build-and-test:
+  build-dotnet:
     # Specify the execution environment. You can specify an image from Dockerhub or use one of our Convenience Images from CircleCI's Developer Hub.
     # See: https://circleci.com/docs/configuration-reference/#docker-machine-macos-windows-executor
     # Be sure to update the tag on this image to a more stable version, using latest can result in unstable builds.
@@ -21,7 +31,7 @@ jobs:
       - run:
           # Update this line with the directory that contains your tests project file
           working_directory: ~/project/backend/
-          name: Run tests
+          name: Build .NET
           command: |
             pwd
             ls
@@ -33,4 +43,5 @@ workflows:
   build-all-the-things: # This is the name of the workflow, feel free to change it to better match your workflow.
     # Inside the workflow, you define the jobs you want to run.
     jobs:
-      - build-and-test
+      - build-dotnet
+      - build-frontend
