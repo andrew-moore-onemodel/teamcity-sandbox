@@ -23,7 +23,7 @@ jobs:
           working_directory: ~/backend/Webapp
           name: Run tests
           command: |
-            ls
+            pwd
 
 # Invoke jobs via workflows
 # See: https://circleci.com/docs/configuration-reference/#workflows
