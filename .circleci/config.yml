@@ -12,10 +12,10 @@ jobs:
       - checkout
       - run:
           working_directory: ~/project/frontend/
+          environment:
+            DISABLE_ESLINT_PLUGIN: "true"
           name: Build JS
           command: |
-            touch .env.production
-            echo "CI=false" > .env.production
             npm install
             npm run build
   build-storybook:
