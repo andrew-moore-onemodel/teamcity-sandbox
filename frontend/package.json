@@ -68,7 +68,7 @@
     "start": "node scripts/start.js",
     "build": "node scripts/build.js",
     "test": "node scripts/test.js",
-    "test:ci": "jest",
+    "test:ci": "jest --reporters=default --reporters=jest-junit",
     "generate-api": "react-query-swagger /tanstack /input:https://localhost:7290/swagger/v1/swagger.json /output:src/api/client.ts /template:Fetch",
     "storybook": "start-storybook -p 6006",
     "build-storybook": "build-storybook"
