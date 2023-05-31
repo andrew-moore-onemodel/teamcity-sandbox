@@ -62,4 +62,6 @@ workflows:
       - build-dotnet
       - build-js
       - build-storybook
-      - test-js
+      - test-js:
+          requires: [build-dotnet]
+
