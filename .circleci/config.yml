@@ -24,6 +24,7 @@ jobs:
           name: Run tests
           command: |
             pwd
+            dotnet build
 
 # Invoke jobs via workflows
 # See: https://circleci.com/docs/configuration-reference/#workflows
