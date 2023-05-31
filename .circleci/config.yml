@@ -23,6 +23,8 @@ jobs:
           working_directory: ~/backend/
           name: Run tests
           command: |
+            pwd
+            ls
             dotnet test
 
 # Invoke jobs via workflows
