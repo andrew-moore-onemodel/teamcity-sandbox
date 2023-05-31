@@ -67,7 +67,7 @@ jobs:
             npm install
             npm run test:ci
       - store_test_results:
-          path: reports/junit
+          path: ~/project/frontend/junit.xml
 
 # Invoke jobs via workflows
 # See: https://circleci.com/docs/configuration-reference/#workflows
