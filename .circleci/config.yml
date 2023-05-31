@@ -23,7 +23,6 @@ jobs:
           working_directory: ~/backend/
           name: Run tests
           command: |
-            pwd
             ls
 
 # Invoke jobs via workflows
