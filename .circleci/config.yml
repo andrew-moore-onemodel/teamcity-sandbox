@@ -12,10 +12,13 @@ jobs:
       - checkout
       - run:
           working_directory: ~/project/frontend/
-          name: Build React App
+          name: Build Storybook
           command: |
             npm install
             npm run build-storybook
+      - store_artifacts:
+          path: ~/project/frontend/storybook-static
+          destination: storybook-static
   # Below is the definition of your job to build and test your app, you can rename and customize it as you want.
   build-dotnet:
     # Specify the execution environment. You can specify an image from Dockerhub or use one of our Convenience Images from CircleCI's Developer Hub.
