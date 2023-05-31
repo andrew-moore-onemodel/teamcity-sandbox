@@ -53,6 +53,19 @@ jobs:
             pwd
             ls
             dotnet build
+  test-js:
+    docker:
+      - image: node:latest
+    steps:
+      - checkout
+      - run:
+          working_directory: ~/project/frontend/
+          environment:
+            DISABLE_ESLINT_PLUGIN: "true"
+          name: Build JS
+          command: |
+            npm install
+            npm run test
 
 # Invoke jobs via workflows
 # See: https://circleci.com/docs/configuration-reference/#workflows
@@ -63,3 +76,4 @@ workflows:
       - build-dotnet
       - build-js
       - build-storybook
+      - test-js
