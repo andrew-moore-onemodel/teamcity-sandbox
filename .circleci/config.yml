@@ -5,6 +5,17 @@ version: 2.1
 # Define a job to be invoked later in a workflow.
 # See: https://circleci.com/docs/configuration-reference/#jobs
 jobs:
+  build-js:
+    docker:
+      - image: node:latest
+    steps:
+      - checkout
+      - run:
+          working_directory: ~/project/frontend/
+          name: Build JS
+          command: |
+            npm install
+            npm run build
   build-storybook:
     docker:
       - image: node:latest
@@ -48,4 +59,5 @@ workflows:
     # Inside the workflow, you define the jobs you want to run.
     jobs:
       - build-dotnet
+      - build-js
       - build-storybook
