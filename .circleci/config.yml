@@ -14,6 +14,8 @@ jobs:
           working_directory: ~/project/frontend/
           name: Build JS
           command: |
+            touch .env.production
+            echo "CI=false" > .env.production
             npm install
             npm run build
   build-storybook:
