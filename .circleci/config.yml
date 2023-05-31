@@ -5,7 +5,7 @@ version: 2.1
 # Define a job to be invoked later in a workflow.
 # See: https://circleci.com/docs/configuration-reference/#jobs
 jobs:
-  build-frontend:
+  build-storybook:
     docker:
       - image: node:latest
     steps:
@@ -15,7 +15,7 @@ jobs:
           name: Build React App
           command: |
             npm install
-            npm run build
+            npm run build-storybook
   # Below is the definition of your job to build and test your app, you can rename and customize it as you want.
   build-dotnet:
     # Specify the execution environment. You can specify an image from Dockerhub or use one of our Convenience Images from CircleCI's Developer Hub.
@@ -45,4 +45,4 @@ workflows:
     # Inside the workflow, you define the jobs you want to run.
     jobs:
       - build-dotnet
-      - build-frontend
+      - build-storybook
