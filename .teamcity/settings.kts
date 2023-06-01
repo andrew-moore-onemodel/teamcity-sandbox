@@ -92,4 +92,11 @@ object BuildBackend : BuildType({
     vcs {
         root(DslContext.settingsRoot)
     }
+
+    steps {
+        dotnetBuild {
+            projects = "backend/Webapp.sln"
+            sdk = "6"
+        }
+    }
 })
