@@ -63,5 +63,12 @@ workflows:
       - build-js
       - build-storybook
       - test-js:
-          requires: [build-dotnet]
+          requires: [build-js]
+  build-frontend:
+    jobs:
+      - build-js
+      - build-storybook
+      - test-js:
+          requires: [build-js]
+
 
