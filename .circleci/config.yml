@@ -12,9 +12,8 @@ commands:
           working_directory: ~/project/frontend/
           command: yarn install --frozen-lockfile --cache-folder ~/.cache/yarn
 
-
 jobs:
-  npm-install:
+  yarn-install:
     docker:
       - image: node:latest
     steps:
@@ -25,7 +24,6 @@ jobs:
           key: yarn-pkgs-{{checksum "~/project/frontend/yarn.lock"}}
           paths:
             - ~/.cache/yarn
-
   build-js:
     docker:
       - image: node:latest
@@ -47,16 +45,6 @@ jobs:
       - store_artifacts:
           path: ~/project/frontend/storybook-static
           destination: storybook-static
-  build-dotnet:
-    docker:
-      - image: mcr.microsoft.com/dotnet/sdk:latest
-    steps:
-      - checkout
-      - run:
-          working_directory: ~/project/backend/
-          name: Build .NET
-          command: |
-            dotnet build
   test-js:
     docker:
       - image: node:latest
@@ -71,19 +59,40 @@ jobs:
           command: npm run test:ci
       - store_test_results:
           path: ~/project/frontend/junit.xml
-
+  build-dotnet:
+    docker:
+      - image: mcr.microsoft.com/dotnet/sdk:latest
+    steps:
+      - checkout
+      - run:
+          working_directory: ~/project/backend/
+          name: Build .NET
+          command: |
+            dotnet build
+  test-dotnet:
+    docker:
+      - image: mcr.microsoft.com/dotnet/sdk:latest
+    steps:
+      - checkout
+      - run:
+          working_directory: ~/project/backend/
+          name: Test .NET
+          command: |
+            dotnet test
 # Invoke jobs via workflows
 # See: https://circleci.com/docs/configuration-reference/#workflows
 workflows:
   build-all-the-things:
     jobs:
-      - npm-install
+      - yarn-install
       - build-js:
-          requires: [npm-install]
+          requires: [yarn-install]
       - build-storybook:
-          requires: [npm-install]
+          requires: [yarn-install]
       - test-js:
           requires: [build-js]
       - build-dotnet
+      - test-dotnet:
+          requires: [build-dotnet]
 
 
