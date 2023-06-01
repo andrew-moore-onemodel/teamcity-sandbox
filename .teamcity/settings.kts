@@ -50,10 +50,10 @@ object Build : BuildType({
         }
         nodeJS {
             name = "Build React"
+            workingDir = "frontend"
             shellScript = """
-                cd frontend
                 npm install
-                npm run test:ci
+                npm run build
             """.trimIndent()
         }
         nodeJS {
