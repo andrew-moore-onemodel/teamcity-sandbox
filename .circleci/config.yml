@@ -13,7 +13,7 @@ jobs:
       - run:
           name: NPM Install
           working_directory: ~/project/frontend/
-          command: npm install
+          command: npm ci
       - save_cache:
           name: Cache NPM Modules
           key: npm-{{checksum "~/project/frontend/package-lock.json"}}
