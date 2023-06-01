@@ -62,10 +62,7 @@ jobs:
       - image: node:latest
     steps:
       - checkout
-      - restore_cache:
-          name: Restore NPM Modules
-          keys:
-            - npm-{{checksum "~/project/frontend/package-lock.json"}}
+      - restore-yarn-pkgs
       - run:
           working_directory: ~/project/frontend/
           environment:
