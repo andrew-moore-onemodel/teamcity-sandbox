@@ -84,10 +84,13 @@ jobs:
 workflows:
   build-all-the-things:
     jobs:
-      - build-dotnet
-      - build-js
-      - build-storybook
+      - npm-install
+      - build-js:
+          requires: [npm-install]
+      - build-storybook:
+          requires: [npm-install]
       - test-js:
           requires: [build-js]
+      - build-dotnet
 
 
