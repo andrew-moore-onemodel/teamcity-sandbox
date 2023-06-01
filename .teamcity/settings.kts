@@ -38,6 +38,10 @@ project {
 object Build : BuildType({
     name = "Build"
 
+    params {
+        param("env.DISABLE_ESLINT_PLUGIN", "true")
+    }
+
     vcs {
         root(DslContext.settingsRoot)
     }
