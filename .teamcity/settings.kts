@@ -36,7 +36,7 @@ project {
 }
 
 object Build : BuildType({
-    name = "Build"
+    name = "Build React"
 
     params {
         param("env.DISABLE_ESLINT_PLUGIN", "true")
