@@ -1,5 +1,6 @@
 import jetbrains.buildServer.configs.kotlin.*
 import jetbrains.buildServer.configs.kotlin.buildFeatures.perfmon
+import jetbrains.buildServer.configs.kotlin.buildSteps.dotnetBuild
 import jetbrains.buildServer.configs.kotlin.triggers.vcs
 
 /*
@@ -36,6 +37,16 @@ object Build : BuildType({
 
     vcs {
         root(DslContext.settingsRoot)
+    }
+
+    steps {
+        dotnetBuild {
+            name = "Build .NET"
+            projects = "backend/Webapp.sln"
+            configuration = "Release"
+            dockerImage = "mcr.microsoft.com/dotnet/sdk:latest"
+            param("dotNetCoverage.dotCover.home.path", "%teamcity.tool.JetBrains.dotCover.CommandLineTools.DEFAULT%")
+        }
     }
 
     triggers {
