@@ -56,6 +56,14 @@ object Build : BuildType({
                 npm run test:ci
             """.trimIndent()
         }
+        nodeJS {
+            name = "Build Storybook"
+            workingDir = "frontend"
+            shellScript = """
+                npm install
+                npm run build-storybook
+            """.trimIndent()
+        }
     }
 
     triggers {
