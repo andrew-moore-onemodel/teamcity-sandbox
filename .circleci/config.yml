@@ -1,30 +1,53 @@
 version: 2.1
 
 jobs:
+  npm-install:
+    docker:
+      - image: node:latest
+    steps:
+      - checkout
+      - restore_cache:
+          name: Restore NPM Modules
+          keys:
+            - npm-{{checksum "~/project/frontend/package-lock.json"}}
+      - run:
+          name: NPM Install
+          working_directory: ~/project/frontend/
+          command: npm install
+      - save_cache:
+          name: Cache NPM Modules
+          key: npm-{{checksum "~/project/frontend/package-lock.json"}}
+          paths:
+            - ~/project/frontend/node_modules
+
   build-js:
     docker:
       - image: node:latest
     steps:
       - checkout
+      - restore_cache:
+          name: Restore NPM Modules
+          keys:
+            - npm-{{checksum "~/project/frontend/package-lock.json"}}
       - run:
           working_directory: ~/project/frontend/
           environment:
             DISABLE_ESLINT_PLUGIN: "true"
           name: Build JS
-          command: |
-            npm install
-            npm run build
+          command: npm run build
   build-storybook:
     docker:
       - image: node:latest
     steps:
       - checkout
+      - restore_cache:
+          name: Restore NPM Modules
+          keys:
+            - npm-{{checksum "~/project/frontend/package-lock.json"}}
       - run:
           working_directory: ~/project/frontend/
           name: Build Storybook
-          command: |
-            npm install
-            npm run build-storybook
+          command: npm run build-storybook
       - store_artifacts:
           path: ~/project/frontend/storybook-static
           destination: storybook-static
@@ -43,14 +66,16 @@ jobs:
       - image: node:latest
     steps:
       - checkout
+      - restore_cache:
+          name: Restore NPM Modules
+          keys:
+            - npm-{{checksum "~/project/frontend/package-lock.json"}}
       - run:
           working_directory: ~/project/frontend/
           environment:
             DISABLE_ESLINT_PLUGIN: "true"
           name: Test JS
-          command: |
-            npm install
-            npm run test:ci
+          command: npm run test:ci
       - store_test_results:
           path: ~/project/frontend/junit.xml
 
@@ -60,12 +85,6 @@ workflows:
   build-all-the-things:
     jobs:
       - build-dotnet
-      - build-js
-      - build-storybook
-      - test-js:
-          requires: [build-js]
-  build-frontend:
-    jobs:
       - build-js
       - build-storybook
       - test-js:
