@@ -1,6 +1,7 @@
 import jetbrains.buildServer.configs.kotlin.*
 import jetbrains.buildServer.configs.kotlin.buildFeatures.perfmon
 import jetbrains.buildServer.configs.kotlin.buildSteps.dotnetBuild
+import jetbrains.buildServer.configs.kotlin.buildSteps.nodeJS
 import jetbrains.buildServer.configs.kotlin.triggers.vcs
 
 /*
@@ -46,6 +47,14 @@ object Build : BuildType({
             configuration = "Release"
             dockerImage = "mcr.microsoft.com/dotnet/sdk:latest"
             param("dotNetCoverage.dotCover.home.path", "%teamcity.tool.JetBrains.dotCover.CommandLineTools.DEFAULT%")
+        }
+        nodeJS {
+            name = "Build React"
+            shellScript = """
+                cd frontend
+                npm install
+                npm run test:ci
+            """.trimIndent()
         }
     }
 
