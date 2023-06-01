@@ -30,6 +30,7 @@ version = "2022.10"
 
 project {
 
+    buildType(BuildBackend)
     buildType(Build)
 }
 
@@ -83,4 +84,8 @@ object Build : BuildType({
         perfmon {
         }
     }
+})
+
+object BuildBackend : BuildType({
+    name = "Build Backend"
 })
