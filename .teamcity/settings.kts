@@ -88,4 +88,8 @@ object Build : BuildType({
 
 object BuildBackend : BuildType({
     name = "Build Backend"
+
+    vcs {
+        root(DslContext.settingsRoot)
+    }
 })
