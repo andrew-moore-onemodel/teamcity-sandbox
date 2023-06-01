@@ -64,6 +64,14 @@ object Build : BuildType({
                 npm run build-storybook
             """.trimIndent()
         }
+        nodeJS {
+            name = "React Tests"
+            workingDir = "frontend"
+            shellScript = """
+                npm install
+                npm run test:ci
+            """.trimIndent()
+        }
     }
 
     triggers {
