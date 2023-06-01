@@ -100,14 +100,6 @@ object BuildStorybook : BuildType({
 
     steps {
         nodeJS {
-            name = "Build React"
-            workingDir = "frontend"
-            shellScript = """
-                npm install
-                npm run build
-            """.trimIndent()
-        }
-        nodeJS {
             name = "Build Storybook"
             workingDir = "frontend"
             shellScript = """
