@@ -1,34 +1,37 @@
 version: 2.1
 
+commands:
+  restore-yarn-pkgs:
+    steps:
+      - restore_cache:
+          name: Restore Yarn Packages
+          keys:
+            - yarn-pkgs-{{checksum "~/project/frontend/yarn.lock"}}
+      - run:
+          name: Yarn Install
+          working_directory: ~/project/frontend/
+          command: yarn install --frozen-lockfile --cache-folder ~/.cache/yarn
+
+
 jobs:
   npm-install:
     docker:
       - image: node:latest
     steps:
       - checkout
-      - restore_cache:
-          name: Restore NPM Modules
-          keys:
-            - npm-{{checksum "~/project/frontend/package-lock.json"}}
-      - run:
-          name: NPM Install
-          working_directory: ~/project/frontend/
-          command: npm ci
+      - restore-yarn-pkgs
       - save_cache:
           name: Cache NPM Modules
-          key: npm-{{checksum "~/project/frontend/package-lock.json"}}
+          key: yarn-pkgs-{{checksum "~/project/frontend/yarn.lock"}}
           paths:
-            - ~/project/frontend/node_modules
+            - ~/.cache/yarn
 
   build-js:
     docker:
       - image: node:latest
     steps:
       - checkout
-      - restore_cache:
-          name: Restore NPM Modules
-          keys:
-            - npm-{{checksum "~/project/frontend/package-lock.json"}}
+      - restore-yarn-pkgs
       - run:
           working_directory: ~/project/frontend/
           environment:
@@ -40,14 +43,7 @@ jobs:
       - image: node:latest
     steps:
       - checkout
-      - restore_cache:
-          name: Restore NPM Modules
-          keys:
-            - npm-{{checksum "~/project/frontend/package-lock.json"}}
-      - run:
-          working_directory: ~/project/frontend/
-          name: Build Storybook
-          command: npm run build-storybook
+      - restore-yarn-pkgs
       - store_artifacts:
           path: ~/project/frontend/storybook-static
           destination: storybook-static
