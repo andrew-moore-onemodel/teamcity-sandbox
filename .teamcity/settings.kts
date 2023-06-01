@@ -52,14 +52,6 @@ object Build : BuildType({
             """.trimIndent()
         }
         nodeJS {
-            name = "Build Storybook"
-            workingDir = "frontend"
-            shellScript = """
-                npm install
-                npm run build-storybook
-            """.trimIndent()
-        }
-        nodeJS {
             name = "React Tests"
             workingDir = "frontend"
             shellScript = """
