@@ -32,6 +32,7 @@ project {
 
     buildType(BuildBackend)
     buildType(Build)
+    buildType(BuildStorybook)
 }
 
 object Build : BuildType({
@@ -90,6 +91,51 @@ object BuildBackend : BuildType({
         dotnetBuild {
             projects = "backend/Webapp.sln"
             sdk = "6"
+        }
+    }
+})
+
+object BuildStorybook : BuildType({
+    name = "Build Storybook"
+
+    vcs {
+        root(DslContext.settingsRoot)
+    }
+
+    steps {
+        nodeJS {
+            name = "Build React"
+            workingDir = "frontend"
+            shellScript = """
+                npm install
+                npm run build
+            """.trimIndent()
+        }
+        nodeJS {
+            name = "Build Storybook"
+            workingDir = "frontend"
+            shellScript = """
+                npm install
+                npm run build-storybook
+            """.trimIndent()
+        }
+        nodeJS {
+            name = "React Tests"
+            workingDir = "frontend"
+            shellScript = """
+                npm install
+                npm run test:ci
+            """.trimIndent()
+        }
+    }
+
+    triggers {
+        vcs {
+        }
+    }
+
+    features {
+        perfmon {
         }
     }
 })
