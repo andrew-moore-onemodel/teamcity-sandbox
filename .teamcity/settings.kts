@@ -42,13 +42,6 @@ object Build : BuildType({
     }
 
     steps {
-        dotnetBuild {
-            name = "Build .NET"
-            projects = "backend/Webapp.sln"
-            configuration = "Release"
-            dockerImage = "mcr.microsoft.com/dotnet/sdk:latest"
-            param("dotNetCoverage.dotCover.home.path", "%teamcity.tool.JetBrains.dotCover.CommandLineTools.DEFAULT%")
-        }
         nodeJS {
             name = "Build React"
             workingDir = "frontend"
