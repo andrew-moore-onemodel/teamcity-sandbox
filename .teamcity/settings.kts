@@ -94,6 +94,15 @@ object BuildBackend : BuildType({
 
 object BuildContainers : BuildType({
     name = "BuildContainers"
+
+    dependencies {
+        snapshot(Build) {
+        }
+        snapshot(BuildBackend) {
+        }
+        snapshot(BuildStorybook) {
+        }
+    }
 })
 
 object BuildStorybook : BuildType({
