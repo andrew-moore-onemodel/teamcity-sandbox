@@ -96,7 +96,7 @@ object BuildContainers : BuildType({
     name = "BuildContainers"
 
     dependencies {
-        snapshot(Build) {
+        snapshot(BuildFrontend) {
         }
         snapshot(BuildBackend) {
         }
