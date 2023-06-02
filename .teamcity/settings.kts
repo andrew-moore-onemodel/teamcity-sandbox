@@ -32,11 +32,11 @@ project {
 
     buildType(BuildBackend)
     buildType(BuildContainers)
-    buildType(Build)
+    buildType(BuildFrontend)
     buildType(BuildStorybook)
 }
 
-object Build : BuildType({
+object BuildFrontend : BuildType({
     name = "Build React"
 
     params {
