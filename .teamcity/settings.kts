@@ -33,6 +33,8 @@ project {
     buildType(BuildBackend)
     buildType(Build)
     buildType(BuildStorybook)
+
+    subProject(BuildAllTheThings)
 }
 
 object Build : BuildType({
@@ -118,4 +120,9 @@ object BuildStorybook : BuildType({
         perfmon {
         }
     }
+})
+
+
+object BuildAllTheThings : Project({
+    name = "Build All The Things"
 })
