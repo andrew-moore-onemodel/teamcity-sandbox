@@ -31,6 +31,7 @@ version = "2022.10"
 project {
 
     buildType(BuildBackend)
+    buildType(BuildContainers)
     buildType(Build)
     buildType(BuildStorybook)
 }
@@ -89,6 +90,10 @@ object BuildBackend : BuildType({
             sdk = "6"
         }
     }
+})
+
+object BuildContainers : BuildType({
+    name = "BuildContainers"
 })
 
 object BuildStorybook : BuildType({
